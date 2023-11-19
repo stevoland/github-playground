@@ -7,14 +7,23 @@ on:
       - reopened
 
 jobs:
-  request:
-    name: Request reviews on opened PRs
-    runs-on: ubuntu-20.04
-
+  add-reviewers:
+    runs-on: ubuntu-latest
     steps:
-      - name: Create PR review request
+      - name: Add Reviewers
+        uses: actions/github-script@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.PR_REVIEWERS }}
-        run: |
-          gh pr edit ${{ github.event.pull_request.html_url }} \
-              --add-reviewer stevoland
+          REVIEWERS: "stevoland"
+        with:
+          script: |
+            const team = 'stevoland';
+            const token = process.env.GITHUB_TOKEN;
+
+            const response = await github.rest.pulls.addReviewers({
+              pull_id: context.payload.pull_id,
+              // team_reviewers: [team],
+              reviewers: fromJSON(`${process.env.REVIEWERS}`)
+              token
+            });
+
+            console.log(response);
