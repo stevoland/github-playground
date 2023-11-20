@@ -16,14 +16,16 @@ jobs:
           REVIEWERS: "stevoland"
         with:
           script: |
-            const team = 'stevoland';
-            const token = process.env.GITHUB_TOKEN;
+            const pull_id = context.payload.pull_id
+            const token = process.env.GITHUB_TOKEN
+            const reviewers = process.env.REVIEWERS && JSON.parse(`[${process.env.REVIEWERS}]`)
+            const team_reviewers = process.env.REVIEWERS && JSON.parse(`[${process.env.TEAM_REVIEWERS}]`)
 
             const response = await github.rest.pulls.addReviewers({
-              pull_id: context.payload.pull_id,
-              // team_reviewers: [team],
-              reviewers: JSON.parse(`[${process.env.REVIEWERS}]`),
+              pull_id,
+              reviewers,
+              team_reviewers,
               token
-            });
+            })
 
-            console.log(response);
+            console.log(response)
