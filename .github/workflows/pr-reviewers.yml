@@ -6,6 +6,9 @@ on:
       - opened
       - reopened
 
+permissions:
+  pull-requests: write
+
 jobs:
   add-reviewers:
     runs-on: ubuntu-latest
@@ -16,6 +19,8 @@ jobs:
           REVIEWERS: "stevoland"
         with:
           script: |
+            console.log(github.rest)
+            console.log(github.rest.pulls)
             const pull_id = context.payload.pull_id
             const token = process.env.GITHUB_TOKEN
             const reviewers = process.env.REVIEWERS && process.env.REVIEWERS.split(',')
