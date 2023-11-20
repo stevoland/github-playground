@@ -21,7 +21,7 @@ jobs:
           script: |
             console.log(github.rest.pulls)
             console.log(github.rest.pulls.requestReviewers)
-            const pull_number = context.payload.pull_number
+            const pull_number = context.payload.pull_request.number
             const token = process.env.GITHUB_TOKEN
             const reviewers = process.env.REVIEWERS && process.env.REVIEWERS.split(',')
             const team_reviewers = process.env.TEAM_REVIEWERS && process.env.TEAM_REVIEWERS.split(',')
