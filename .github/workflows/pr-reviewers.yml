@@ -22,7 +22,7 @@ jobs:
             const response = await github.rest.pulls.addReviewers({
               pull_id: context.payload.pull_id,
               // team_reviewers: [team],
-              reviewers: fromJSON(`${process.env.REVIEWERS}`)
+              reviewers: fromJSON(`${process.env.REVIEWERS}`),
               token
             });
 
