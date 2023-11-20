@@ -18,8 +18,8 @@ jobs:
           script: |
             const pull_id = context.payload.pull_id
             const token = process.env.GITHUB_TOKEN
-            const reviewers = process.env.REVIEWERS && JSON.parse(`${process.env.REVIEWERS.split(',')]`)
-            const team_reviewers = process.env.TEAM_REVIEWERS && JSON.parse(`[${process.env.TEAM_REVIEWERS.split(',')}]`)
+            const reviewers = process.env.REVIEWERS && process.env.REVIEWERS.split(',')
+            const team_reviewers = process.env.TEAM_REVIEWERS && process.env.TEAM_REVIEWERS.split(',')
 
             const response = await github.rest.pulls.addReviewers({
               pull_id,
