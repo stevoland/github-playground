@@ -21,13 +21,15 @@ jobs:
           script: |
             console.log(github.rest)
             console.log(github.rest.pulls)
-            const pull_id = context.payload.pull_id
+            const pull_number = context.payload.pull_number
             const token = process.env.GITHUB_TOKEN
             const reviewers = process.env.REVIEWERS && process.env.REVIEWERS.split(',')
             const team_reviewers = process.env.TEAM_REVIEWERS && process.env.TEAM_REVIEWERS.split(',')
 
-            const response = await github.rest.pulls.addReviewers({
-              pull_id,
+            const response = await github.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number,
               reviewers,
               team_reviewers,
               token
