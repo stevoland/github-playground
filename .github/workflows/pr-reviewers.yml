@@ -26,7 +26,7 @@ jobs:
             const reviewers = process.env.REVIEWERS && process.env.REVIEWERS.split(',')
             const team_reviewers = process.env.TEAM_REVIEWERS && process.env.TEAM_REVIEWERS.split(',')
 
-            const response = await github.pulls.requestReviewers({
+            const response = await github.octokit.rest.pulls.requestReviewers({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number,
